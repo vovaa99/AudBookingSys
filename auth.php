@@ -12,18 +12,20 @@ if (isset($_SESSION['session_username'])) {
 if (isset($_POST['submit'])) {    
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
-        $query = mysqli_query($con, "SELECT `password` FROM `acc_management` WHERE email='".mysqli_real_escape_string($con, $_POST['email'])."'");        
+        $query = mysqli_query($con, "SELECT Name, Type, password FROM `acc_management` WHERE email='".mysqli_real_escape_string($con, $_POST['email'])."'");        
         $data = mysqli_fetch_assoc($query);
         if ( password_verify ($_POST['password'], $data['password']) ){
             // старое место расположения
             //  session_start();
-            $_SESSION['session_username'] = $email;
+            $_SESSION['session_username'] = $_POST['email'].'_'.$_SERVER['HTTP_USER_AGENT'];
+            $_SESSION['type'] = $data['Type'];
+            $_SESSION['name'] = $data['Name'];
             /* Перенаправление браузера */
             header("Location: index.php");
         
         } else {
             echo "Неверный E-mail и/или пароль!<br>";
-            echo $_POST['email'], ' ' , $_POST['password'],' ', $data['password'];
+            //echo $_POST['email'], ' ' , $_POST['password'],' ', $data['password'], ' ', $data['Name'];
         }
     } else {
         $message = "Необходимо заполнить все поля!";
