@@ -1,5 +1,9 @@
 <?php 
 include 'head.php';
-include 'auth.php';
+?>
+
+<a href="auth.php">Вход</a>
+
+<?php
 include 'footer.php';
 ?>
