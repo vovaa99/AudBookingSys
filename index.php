@@ -1,4 +1,5 @@
 <?php 
+include 'lib/conection.php';
 include 'head.php';
 session_start();
 if(!isset($_SESSION['session_username']))

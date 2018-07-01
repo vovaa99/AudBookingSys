@@ -27,10 +27,13 @@ if (isset($_POST['submit'])) {
     if (!isset($_POST['type'])) {
         $err[] = "Вы не указали тип пользователя";
     }
+    if (!$_POST['name']) {
+        $err_email[] = "Пароль не может быть пустым";
+    }
     # Если нет ошибок, то добавляем в БД нового пользователя
     if (count($err) == 0) {
         $email = $_POST['email'];
-        # Убераем лишние пробелы и делаем двойное шифрование
+        
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $name = $_POST['name'];
         $type = $_POST['type'];
