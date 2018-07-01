@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
             </label>
         </p> 
         <p class="submit"><input class="button" name="submit" type="submit" value="Войти"></p>
-        <p class="regtext"><a href= "register.php">Регистрация</a></p>
+        <p class="regtext"><a href= "signup.php">Регистрация</a></p>
     </form>
 </div>
 
