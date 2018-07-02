@@ -5,7 +5,7 @@ $err_line = array();
 $err_array = array();
 
 if (isset($_POST['submit_DB_set'])) {
-    $file = fopen('lib/constants.php', 'c');
+    $file = fopen('lib/constants.php', 'w+');
     if (!file_exists('lib/constants.php')) {
         $err++;
         $err_line[] = "Что-то пошло не так. Проверьте права на изменение файлов.";
@@ -13,18 +13,17 @@ if (isset($_POST['submit_DB_set'])) {
     if ($err == 0) {
         if (!empty($_POST['DB_SERVER']) && !empty($_POST['DB_NAME'])) {
 
-            $line = '<?php ';
+            $line = '<?php '.PHP_EOL;
             fwrite($file, $line);
-            $line = 'define("DB_SERVER", "' . $_POST['DB_SERVER'] . '"); ';
+            $line = 'define("DB_SERVER", "' . $_POST['DB_SERVER'] . '"); '.PHP_EOL;
             fwrite($file, $line);
-            $line = 'define("DB_USER", "' . $_POST['DB_USER'] . '"); ';
+            $line = 'define("DB_USER", "' . $_POST['DB_USER'] . '"); '.PHP_EOL;
             fwrite($file, $line);
-            $line = 'define("DB_PASS", "' . $_POST['DB_PASS'] . '"); ';
+            $line = 'define("DB_PASS", "' . $_POST['DB_PASS'] . '"); '.PHP_EOL;
             fwrite($file, $line);
-            $line = 'define("DB_NAME", "' . $_POST['DB_NAME'] . '"); ';
+            $line = 'define("DB_NAME", "' . $_POST['DB_NAME'] . '"); '.PHP_EOL;
             fwrite($file, $line);
             fclose($file);
-
         } else {
             $err++;
             $err_line[] = "Поля Сервер БД и Имя БД должны быть заполнены.";
@@ -32,27 +31,29 @@ if (isset($_POST['submit_DB_set'])) {
     }
     /*  СОЗДАНИЕ ТАБЛИЦЫ БД */
     if ($err == 0) {
-        
+
         $con = @mysqli_connect($_POST['DB_SERVER'], $_POST['DB_USER'], $_POST['DB_PASS']);
         //$con = @mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
         if (mysqli_connect_errno()) {
             $err++;
-            $err_array[] = mysqli_connect_error();    
+            $err_line[] = mysqli_connect_error();
+            //$err_array[] = mysqli_connect_error();
             //print_r( mysqli_error_list($con));
-        }
-        else{
+        } else {
             mysqli_set_charset($con, 'utf8');
         }
     }
     if ($err == 0) {
-        if (!mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci")) {
+        $query = mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci");
+        if (!$query) {
             $err++;
-            $err_array[] = mysqli_error_list($con);
+            $err_line[] = mysqli_error($query);
+            //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
     }
     if ($err == 0) {
-        if (!mysqli_query($con, "CREATE TABLE `" . $_POST['DB_NAME']. "`.`acc_management` (
+        $query = mysqli_query($con, "CREATE TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` (
   `#` int(10) UNSIGNED NOT NULL,
   `Type` tinyint(1) UNSIGNED DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -61,34 +62,61 @@ if (isset($_POST['submit_DB_set'])) {
   `Tel` longtext COLLATE utf8mb4_unicode_ci,
   `Department` longtext COLLATE utf8mb4_unicode_ci,
   `Rank` longtext COLLATE utf8mb4_unicode_ci
-   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci")) {
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+        if (!$query) {
             $err++;
-            $err_array[] = mysqli_error_list($con);
+            $err_line[] = mysqli_error($query);
+            $err++;
+            $err_line[] = mysqli_error($con);
+            //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
     }
     if ($err == 0) {
-        if (!mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` ADD PRIMARY KEY (`#`)")) {
+        $query = mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` ADD PRIMARY KEY (`#`)");
+        if (!$query) {
             $err++;
-            $err_array[] = mysqli_error_list($con);
+            $err_line[] = mysqli_error($query);
+            $err++;
+            $err_line[] = mysqli_error($con);
+            //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
     }
     if ($err == 0) {
-        if (!mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` MODIFY `#` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1 ")) {
+        $query = mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` MODIFY `#` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1 ");
+
+        if (!$query) {
             $err++;
-            $err_array[] = mysqli_error_list($con);
-            //print_r( mysqli_error_list($con));
+            $err_line[] = mysqli_error($query);
+            $err++;
         }
+        $err_array[] = mysqli_error($con);
+        //$err_array[] = mysqli_error_list($con);
+        //print_r( mysqli_error_list($con));
     }
+
     if ($err > 0) {
         print "<b>Произошли следующие ошибки:</b><br>";
-        print_r($err_line);
-        echo "<br>";
-        print_r($err_array);
+        //print_r($err_line);
+        foreach ($err_line as $error) {
+            echo "Value: $error\n";
+        }
+
+
+        //print_r($err_array);
+        /*     foreach ($err_array as $error) {
+          echo "Value: $error\n";
+          } */
+        /* foreach ($err_array as $num => $array) {
+          foreach ($array as $key => $value) {
+          echo "$key: "
+          . "$value\n";
+          }
+          } */
     }
     if ($err == 0) {
-        $line = 'define("DB_INSTALLED", 1); ';
+        $line = 'define("DB_INSTALLED", 1); '.PHP_EOL;
         file_put_contents('lib/constants.php', $line, FILE_APPEND);
         header("Location: first_signup.php");
         exit();
@@ -123,5 +151,3 @@ if (isset($_POST['submit_DB_set'])) {
 <?php
 include 'footer.php';
 ?>
-
-
