@@ -2,11 +2,11 @@
 include 'head.php';
 $err = 0;
 $err_line = array();
-$err_array = array();
+
 
 if (isset($_POST['submit_DB_set'])) {
     $file = fopen('lib/constants.php', 'w+');
-    if (!file_exists('lib/constants.php')) {
+    if (!$file) {
         $err++;
         $err_line[] = "Что-то пошло не так. Проверьте права на изменение файлов.";
     }
@@ -66,8 +66,6 @@ if (isset($_POST['submit_DB_set'])) {
         if (!$query) {
             $err++;
             $err_line[] = mysqli_error($query);
-            $err++;
-            $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
@@ -77,8 +75,6 @@ if (isset($_POST['submit_DB_set'])) {
         if (!$query) {
             $err++;
             $err_line[] = mysqli_error($query);
-            $err++;
-            $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
@@ -89,31 +85,18 @@ if (isset($_POST['submit_DB_set'])) {
         if (!$query) {
             $err++;
             $err_line[] = mysqli_error($query);
-            $err++;
         }
-        $err_array[] = mysqli_error($con);
         //$err_array[] = mysqli_error_list($con);
         //print_r( mysqli_error_list($con));
     }
 
     if ($err > 0) {
         print "<b>Произошли следующие ошибки:</b><br>";
-        //print_r($err_line);
         foreach ($err_line as $error) {
-            echo "Value: $error\n";
+            echo "Value: $error\n";  
         }
-
-
-        //print_r($err_array);
-        /*     foreach ($err_array as $error) {
-          echo "Value: $error\n";
-          } */
-        /* foreach ($err_array as $num => $array) {
-          foreach ($array as $key => $value) {
-          echo "$key: "
-          . "$value\n";
-          }
-          } */
+        $line = 'define("DB_INSTALLED", 0); '.PHP_EOL;
+        file_put_contents('lib/constants.php', $line, FILE_APPEND);
     }
     if ($err == 0) {
         $line = 'define("DB_INSTALLED", 1); '.PHP_EOL;

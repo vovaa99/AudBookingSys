@@ -43,10 +43,13 @@ if (isset($_POST['submit_adm_signup'])) {
         rename('index_install.php', 'index.php');
         unlink('install.php');
         unlink('first_signup.php');
-  /*      print "<b>Установка выполнена успешно. Вы будете перенаправлены на страницу авторизации.</b><br>";
-        sleep(15);*/
-        header("Location: auth.php");
-        exit();
+        if (file_exists(index_install.php) || file_exists(install.php) || file_exists(first_signup.php) || !file_exists(index.php)){
+            print "<b>Удалите вручную файлы install.php, first_signup.php, переименуйте файл index_install.php в index.php и установка будет завершена.</b><br>";            
+        }else {
+            print "<b>Установка выполнена успешно. Вы будете перенаправлены на страницу авторизации.</b><br>";
+            header("Location: auth.php");
+            exit();       
+        }
     } else {
         print "<b>При регистрации произошли следующие ошибки:</b><br>";
         foreach ($err_signup AS $error) {
