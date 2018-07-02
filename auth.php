@@ -9,7 +9,7 @@ if (isset($_SESSION['session_username']))
     header("Location: index.php");
 }
 
-if (isset($_POST['submit'])) {    
+if (isset($_POST['submit'])) {
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
         $query = mysqli_query($con, "SELECT Name, Type, password FROM `acc_management` WHERE email='".mysqli_real_escape_string($con, $_POST['email'])."'");        

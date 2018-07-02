@@ -3,10 +3,9 @@ include 'head.php';
 include 'lib/connection.php';
 if (isset($_POST['submit_adm_signup'])) {
     $err_email = array();
-    if (!$_POST['email']) {
+    if (!empty($_POST['email'])) {
         $err_email[] = "Вы не ввели e-mail";
     } else {
-
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $err_email[] = "Вы ввели не e-mail";
         }

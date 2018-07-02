@@ -1,11 +1,18 @@
 <?php
 include 'head.php';
-$err = array();
-if (isset($_POST['submit_DB_set'])) {
-    $file = fopen('lib/constants.php', 'w+');
+$err = 0;
+$err_line = array();
+$err_array = array();
 
-    if ($_POST['DB_SERVER'] && $_POST['DB_NAME']) {
-        if (file_exists('lib/constants.php')) {
+if (isset($_POST['submit_DB_set'])) {
+    $file = fopen('lib/constants.php', 'c');
+    if (!file_exists('lib/constants.php')) {
+        $err++;
+        $err_line[] = "Что-то пошло не так. Проверьте права на изменение файлов.";
+    }
+    if ($err == 0) {
+        if (!empty($_POST['DB_SERVER']) && !empty($_POST['DB_NAME'])) {
+
             $line = '<?php ';
             fwrite($file, $line);
             $line = 'define("DB_SERVER", "' . $_POST['DB_SERVER'] . '"); ';
@@ -23,22 +30,32 @@ if (isset($_POST['submit_DB_set'])) {
 
             fclose($file);
         } else {
-            $err[] = "Что-то пошло не так. Проверьте права на изменение файлов.";
+            $err++;
+            $err_line[] = "Поля Сервер БД и Имя БД должны быть заполнены.";
         }
-    } else {
-        $err[] = "Поля Сервер БД и Имя БД должны быть заполнены.";
     }
-
-   
     /*  СОЗДАНИЕ ТАБЛИЦЫ БД */
-    if (count($err) == 0) {
-        include 'lib/constants.php';
-        $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
-        mysqli_set_charset($con, 'utf8');
-
-
-        mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci");
-        mysqli_query($con, "CREATE TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` (
+    if ($err == 0) {
+        $con = @mysqli_connect($_POST['DB_SERVER'], $_POST['DB_USER'], $_POST['DB_PASS']);
+        //$con = @mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
+        if (mysqli_connect_errno()) {
+            $err++;
+            $err_array[] = mysqli_connect_error();    
+            //print_r( mysqli_error_list($con));
+        }
+        else{
+            mysqli_set_charset($con, 'utf8');
+        }
+    }
+    if ($err == 0) {
+        if (!mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci")) {
+            $err++;
+            $err_array[] = mysqli_error_list($con);
+            //print_r( mysqli_error_list($con));
+        }
+    }
+    if ($err == 0) {
+        if (!mysqli_query($con, "CREATE TABLE `" . DB_NAME . "`.`acc_management` (
   `#` int(10) UNSIGNED NOT NULL,
   `Type` tinyint(1) UNSIGNED DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -47,17 +64,35 @@ if (isset($_POST['submit_DB_set'])) {
   `Tel` longtext COLLATE utf8mb4_unicode_ci,
   `Department` longtext COLLATE utf8mb4_unicode_ci,
   `Rank` longtext COLLATE utf8mb4_unicode_ci
-   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-        mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` ADD PRIMARY KEY (`#`)");
-        mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` MODIFY `#` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1 ");
-        
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci")) {
+            $err++;
+            $err_array[] = mysqli_error_list($con);
+            //print_r( mysqli_error_list($con));
+        }
+    }
+    if ($err == 0) {
+        if (!mysqli_query($con, "ALTER TABLE `" . DB_NAME . "`.`acc_management` ADD PRIMARY KEY (`#`)")) {
+            $err++;
+            $err_array[] = mysqli_error_list($con);
+            //print_r( mysqli_error_list($con));
+        }
+    }
+    if ($err == 0) {
+        if (!mysqli_query($con, "ALTER TABLE `" . DB_NAME . "`.`acc_management` MODIFY `#` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1 ")) {
+            $err++;
+            $err_array[] = mysqli_error_list($con);
+            //print_r( mysqli_error_list($con));
+        }
+    }
+    if ($err > 0) {
+        print "<b>Произошли следующие ошибки:</b><br>";
+        print_r($err_line);
+        echo "<br>";
+        print_r($err_array);
+    }
+    if ($err == 0) {
         header("Location: first_signup.php");
         exit();
-    } else {
-        print "<b>Произошли следующие ошибки:</b><br>";
-        foreach ($err AS $error) {
-            print $error . "<br>";
-        }
     }
 }
 ?>
@@ -75,7 +110,7 @@ if (isset($_POST['submit_DB_set'])) {
         </p>
         <p>
             <label for="DB_PASS">Пароль к БД
-                <input class="input" id="DB_PASS" name="DB_PASS" type="text" value="">
+                <input class="input" id="DB_PASS" name="DB_PASS" type="password" value="">
             </label>
         </p>
         <p>
