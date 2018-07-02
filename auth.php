@@ -1,10 +1,11 @@
 <?php 
+
 include 'head.php';
 session_start();
 require 'lib/connection.php';
 
-if (isset($_SESSION['session_username'])) {
-    // вывод "Session is set"; // в целях проверки
+if (isset($_SESSION['session_username'])) 
+{    
     header("Location: index.php");
 }
 

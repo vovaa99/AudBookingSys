@@ -1,3 +1,4 @@
+
 <?php
 require 'lib/constants.php';
 if (!DB_INSTALLED) {
