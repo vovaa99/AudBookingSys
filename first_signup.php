@@ -1,31 +1,32 @@
 <?php
-include 'head.php';
 include 'lib/connection.php';
+include 'head.php';
+
 if (isset($_POST['submit_adm_signup'])) {
-    $err_email = array();
-    if (!empty($_POST['email'])) {
-        $err_email[] = "Вы не ввели e-mail";
+    $err_signup = array();
+    if (empty($_POST['email'])) {
+        $err_signup[] = "Вы не ввели e-mail";
     } else {
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $err_email[] = "Вы ввели не e-mail";
+            $err_signup[] = "Вы ввели не e-mail";
         }
     }
     if (!$_POST['password']) {
-        $err_email[] = "Пароль не может быть пустым.";
+        $err_signup[] = "Пароль не может быть пустым.";
     }
     if (!$_POST['name']) {
-        $err_email[] = "Вы не ввели ФИО";
+        $err_signup[] = "Вы не ввели ФИО";
     }
     if (!$_POST['tel']) {
-        $err_email[] = "Вы не ввели рабочий телефон";
+        $err_signup[] = "Вы не ввели рабочий телефон";
     }
     if (!$_POST['department']) {
-        $err_email[] = "Вы не ввели Отдел";
+        $err_signup[] = "Вы не ввели Отдел";
     }
     if (!$_POST['rank']) {
-        $err_email[] = "Вы не ввели должность";
+        $err_signup[] = "Вы не ввели должность";
     }
-    if (count($err_email) == 0) {
+    if (count($err_signup) == 0) {
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $name = $_POST['name'];
@@ -48,7 +49,7 @@ if (isset($_POST['submit_adm_signup'])) {
         exit();
     } else {
         print "<b>При регистрации произошли следующие ошибки:</b><br>";
-        foreach ($err_email AS $error) {
+        foreach ($err_signup AS $error) {
             print $error . "<br>";
         }
     }
@@ -79,5 +80,4 @@ if (isset($_POST['submit_adm_signup'])) {
 </div>
 <?php
 include 'footer.php';
-?>
 
