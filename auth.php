@@ -1,5 +1,4 @@
 <?php 
-
 include 'head.php';
 session_start();
 require 'lib/connection.php';
