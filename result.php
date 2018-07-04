@@ -26,7 +26,7 @@ $err=0;
     }
     if($err == 0)
     {
-         print "<b>Удалите папку install, чтобы завершить установку. </b><br>";
+         print "<b>Установка прошла успешно.</b><br>";
          sleep(30);
          header('Loaction: index.php');
     }
