@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>Таблица с закругленными углами на CSS</title>
+	<link rel='stylesheet' href='style.css' type='text/css' />
+	<style>
+    button.color1 {
+
+      float: left;
+      background: #dce9f9;
+      color: black;
+      font-size: 10pt;
+      width: 80px;
+      height: 30px;
+      border-radius: 10px;
+      margin: 5px;
+    }
+    </style>
+</head>
+
+<body>
+
+<h2 style="float:left">Список заявок  </h2><br>
+
+ <button style="float:right" class="color1">Изменить</button> <button style="float:right"class="color1">Отклонить</button>
+
+<table class="bordered">
+    <thead>
+		<tr>
+			<th>№ Заявки</th>
+			<th>Дата</th>        
+			<th>Пара</th>
+			<th>Аудитория</th>
+			<th>ФИО просящего</th>
+			<th>ФИО преподавателя</th>
+			<th>Цель</th>
+			<th>Статус</th>
+		</tr>
+    </thead>
+    
+    <tr>
+		<td>1</td>        
+        <td>05.06.2018</td>
+        <td>1</td>
+        <td>411-В</td>
+        <td>Петров Николай Иванович</td>
+        <td>Иванов Петр Иванович</td>
+        <td>Проведение пары</td>
+        <td>удовлетворена/отклонена</td>
+    </tr>        
+    <tr>
+		<td>2</td>         
+        <td>07.06.2018</td>
+        <td>3</td>
+        <td>301-В</td>
+        <td>Иванова Ольга Владимировна</td>
+        <td>Иванов Павел Юрьевич</td>
+        <td>Проведение пары</td>
+        <td>удовлетворена/отклонена</td>
+    </tr>
+    </table>
+</body>
+</html>
