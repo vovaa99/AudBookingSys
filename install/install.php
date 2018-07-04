@@ -1,11 +1,13 @@
 <?php
-include 'head.php';
+include '../head.php';
 $err = 0;
 $err_line = array();
 
 
 if (isset($_POST['submit_DB_set'])) {
-    $file = fopen('lib/constants.php', 'w+');
+
+    $file = fopen('../lib/constants.php', 'w+');
+    
     if (!$file) {
         $err++;
         $err_line[] = "Что-то пошло не так. Проверьте права на изменение файлов.";
@@ -47,7 +49,7 @@ if (isset($_POST['submit_DB_set'])) {
         $query = mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci");
         if (!$query) {
             $err++;
-            $err_line[] = mysqli_error($query);
+            $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
@@ -65,7 +67,7 @@ if (isset($_POST['submit_DB_set'])) {
    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
         if (!$query) {
             $err++;
-            $err_line[] = mysqli_error($query);
+            $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
@@ -74,7 +76,7 @@ if (isset($_POST['submit_DB_set'])) {
         $query = mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` ADD PRIMARY KEY (`#`)");
         if (!$query) {
             $err++;
-            $err_line[] = mysqli_error($query);
+            $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
         }
@@ -84,7 +86,7 @@ if (isset($_POST['submit_DB_set'])) {
 
         if (!$query) {
             $err++;
-            $err_line[] = mysqli_error($query);
+            $err_line[] = mysqli_error($con);
         }
         //$err_array[] = mysqli_error_list($con);
         //print_r( mysqli_error_list($con));
@@ -96,11 +98,18 @@ if (isset($_POST['submit_DB_set'])) {
             echo "Value: $error\n";  
         }
         $line = 'define("DB_INSTALLED", 0); '.PHP_EOL;
-        file_put_contents('lib/constants.php', $line, FILE_APPEND);
+        file_put_contents('../lib/constants.php', $line, FILE_APPEND);
+        $err_file = fopen('../errors.txt', 'w+');
+        foreach($err_line as $err)
+        {
+            fwrite($err_file, $err.PHP_EOL);    
+        }
+        fclose($err_file);
+
     }
     if ($err == 0) {
         $line = 'define("DB_INSTALLED", 1); '.PHP_EOL;
-        file_put_contents('lib/constants.php', $line, FILE_APPEND);
+        file_put_contents('../lib/constants.php', $line, FILE_APPEND);
         header("Location: first_signup.php");
         exit();
     }
@@ -132,5 +141,5 @@ if (isset($_POST['submit_DB_set'])) {
     </form>
 </div>
 <?php
-include 'footer.php';
+include '../footer.php';
 ?>

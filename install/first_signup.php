@@ -1,6 +1,6 @@
 <?php
-include 'lib/connection.php';
-include 'head.php';
+include '../lib/connection.php';
+include '../head.php';
 
 if (isset($_POST['submit_adm_signup'])) {
     $err_signup = array();
@@ -35,21 +35,15 @@ if (isset($_POST['submit_adm_signup'])) {
         $department = $_POST['department'];
         $rank = $_POST['rank'];
 
-        mysqli_query($con, "INSERT INTO `acc_management` SET email='" . $email . "', password='" . $password . "', Name='" . $name . "', Type='" . $type . "', Tel='" . $tel . "', Department='" . $department . "', Rank='" . $rank . "'");
-
-        /*  УДАЛЕНИЕ INDEX.PHP, INSTALL.PHP, ПЕРЕИМЕНОВАНИЕ INDEX_INSTALL.PHP -> INDEX.PHP */
-
-        unlink('index.php');
-        rename('index_install.php', 'index.php');
-        unlink('install.php');
-        unlink('first_signup.php');
-        if (file_exists(index_install.php) || file_exists(install.php) || file_exists(first_signup.php) || !file_exists(index.php)){
-            print "<b>Удалите вручную файлы install.php, first_signup.php, переименуйте файл index_install.php в index.php и установка будет завершена.</b><br>";            
-        }else {
-            print "<b>Установка выполнена успешно. Вы будете перенаправлены на страницу авторизации.</b><br>";
-            header("Location: auth.php");
-            exit();       
+        if(!mysqli_query($con, "INSERT INTO `acc_management` SET email='" . $email . "', password='" . $password . "', Name='" . $name . "', Type='" . $type . "', Tel='" . $tel . "', Department='" . $department . "', Rank='" . $rank . "'"))
+        {
+            print "<b>Не удалось выполнить запрос.</b><br>";   
+            printf("Errormessage: %s\n", mysqli_error($con));
+        }else{
+            header('Location: ../result.php');
         }
+        
+        /*  УДАЛЕНИЕ INDEX.PHP, INSTALL.PHP, ПЕРЕИМЕНОВАНИЕ INDEX_INSTALL.PHP -> INDEX.PHP */
     } else {
         print "<b>При регистрации произошли следующие ошибки:</b><br>";
         foreach ($err_signup AS $error) {
@@ -82,5 +76,5 @@ if (isset($_POST['submit_adm_signup'])) {
     </form>
 </div>
 <?php
-include 'footer.php';
+include '../footer.php';
 
