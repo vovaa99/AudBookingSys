@@ -3,7 +3,6 @@ include '../head.php';
 $err = 0;
 $err_line = array();
 
-
 if (isset($_POST['submit_DB_set'])) {
 
     $file = fopen('../lib/constants.php', 'w+');
@@ -37,7 +36,7 @@ if (isset($_POST['submit_DB_set'])) {
         $con = @mysqli_connect($_POST['DB_SERVER'], $_POST['DB_USER'], $_POST['DB_PASS']);
         //$con = @mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
         if (mysqli_connect_errno()) {
-            $err++;
+            //$err++;
             $err_line[] = mysqli_connect_error();
             //$err_array[] = mysqli_connect_error();
             //print_r( mysqli_error_list($con));
@@ -48,7 +47,6 @@ if (isset($_POST['submit_DB_set'])) {
     if ($err == 0) {
         $query = mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci");
         if (!$query) {
-            $err++;
             $err_line[] = mysqli_error($con);
             //$err_array[] = mysqli_error_list($con);
             //print_r( mysqli_error_list($con));
