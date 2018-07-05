@@ -1,0 +1,245 @@
+*{
+    margin: 0;
+    padding: 0;	
+    
+}
+button{
+    border:none;
+	cursor:pointer;
+}
+body {
+
+    margin: 40px auto;
+    font-family: 'trebuchet MS', 'Lucida sans', Arial;
+    font-size: 15px;
+    color: #444;
+}
+.content
+{
+    padding: 5px;
+
+}
+
+table {
+    *border-collapse: collapse; /* IE7 и раньше */
+    border-spacing: 0;
+    width: 100%;    
+}
+
+.bordered {
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc; 
+    -moz-box-shadow: 0 1px 1px #ccc; 
+    box-shadow: 0 1px 1px #ccc;         
+}
+
+.bordered tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}    
+
+.bordered td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;    
+}
+
+.bordered th {
+    background-color: #dce9f9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5); 
+}
+
+.bordered td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.bordered th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.bordered th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.bordered th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.bordered tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.bordered tr:last-child td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+button.color1 {
+    float: left;
+    background:#3CB371;
+    color: white;
+    /* Белые буквы */
+    font-size: 15pt;
+    /* Размер шрифта в пунктах */
+    width: 130px;
+    height: 70px;
+    border-radius: 7px;
+    margin: 5px;
+}
+
+button.color2 {
+    float: left;
+    background: #FFD700;
+    color: white;
+    /* Белые буквы */
+    font-size: 15pt;
+    /* Размер шрифта в пунктах */
+    width: 130px;
+    height: 70px;
+    border-radius: 7px;
+    margin: 5px;
+}
+
+button.color3 {
+    float: left;
+    background: #FF6347;
+    color: white;
+    /* Белые буквы */
+    font-size: 15pt;
+    /* Размер шрифта в пунктах */
+    width: 130px;
+    height: 70px;
+    border-radius: 7px;
+    margin: 5px;
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #dce9f9;
+}
+
+/* Style the buttons inside the tab */
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+
+.tab button:hover {
+    background-color: #add8e6;
+}
+
+/* Create an active/current tablink class */
+
+.tab button.active {
+    background-color: #8bd0d9;
+}
+
+/* Style the tab content */
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+
+
+}
+.tabcontent>p
+{
+    margin:10px 0 0 5px; 
+
+}
+.tabcontent form {
+    display: inline-block;
+}
+
+.tabcontent form button {
+    padding: 15px;
+}
+
+.tabcontent form button p {
+    color: black;
+    font-size: 12pt;
+    margin-top: 3px;
+}
+
+.operations{
+    background: #dce9f9;
+    color: black;
+    font-size: 10pt;
+    width: 73px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 5px;
+    border:none;
+    
+}
+.table-wrapper {
+    margin:0 auto;
+    max-width: 1000px;
+    
+}
+.form-wrapper {
+    margin:10px auto;
+    width:600px;
+    height:650px;
+    position:relative;
+    border:1px solid rgb(197,200,204);
+    background-color:rgb(248,249,250);
+    text-align:center;
+    border-radius:5px;
+    display:block
+}
+.form-wrapper-top{
+    content:"";
+    display:block;
+    height:37px;
+    border-bottom:1px solid rgb(197,200,204);
+    border-radius:5px 5px 0 0;
+    padding: 5px;
+}
+.form-wrapper form>*
+{
+    margin: 15px;	
+}
+.form-wrapper form>p>label>input
+{
+    margin-top: 7px;	
+}
+

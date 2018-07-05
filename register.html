@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Регистрация</title>
+        <meta charset="utf-8">
+        <link rel='stylesheet' href='style.css' type='text/css' />
+    </head>
+    <body>
+        <div class="content">
+            <div class="form-wrapper">
+                <div class="form-wrapper-top"><h1>Регистрация</h1></div>
+                <form action="register.php" id="registerform" method="post" name="registerform">
+                    <p><label for="full_name">ФИО<br>
+                            <input class="input"  id="full_name" name="full_name" size="32"  type="text" value=""></label></p>
+                    <p><label for="post">Должность<br>
+                            <input  class="input"  id="post" name="post" size="32" type="text" value=""></label></p>
+                    <p><label for="username">Факультет<br>
+                            <input class="input" id="username" name="username" size="20" type="text" value=""></label></p>
+                    <p><label for="email">E-mail<br>
+                            <input class="input" id="email" name="email" size="32" type="email" value=""></label></p>
+                    <p><label for="phone">Рабочий телефон<br>
+                            <input class="input" id="phone" name="phone" size="32" type="text" value=""></label></p>
+                    <p><label for="password">Пароль<br>
+                            <input class="input" id="password" name="password" size="32"   type="password" value=""></label></p>
+                    <p><input class="button" id="register" name= "register" type="submit" value="Зарегистрировать"></p>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>
