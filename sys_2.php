@@ -19,7 +19,8 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
 <p style="color: blue"><big>Корпус А</big></p>
 <form>
     <?php foreach ($roomsA as $room) { ?>
-        <button class="<?php
+    
+        <a href="#block" class="<?php
         $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
 
         if (!isset($key) || $key === false) {
@@ -29,15 +30,16 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         } else if ($booking[$key]["Статус"] == 2) {
             print "color3";
         }
-        ?>"><?php print $room["Номер"]; ?>
-            <p><?php print $room["Количество мест"]; ?></p></button>
-    <?php } ?>
+        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
+            <p><?php print $room["Количество мест"]; ?></p> </a> 
+   <?php } ?>
 </form>
 <p style="color: blue"><big>Корпус Б</big>
 </p>
 <form>
     <?php foreach ($roomsB as $room) { ?>
-        <button class="<?php
+    
+        <a href="#block" class="<?php
         $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
 
         if (!isset($key) || $key === false) {
@@ -47,15 +49,16 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         } else if ($booking[$key]["Статус"] == 2) {
             print "color3";
         }
-        ?>"><?php print $room["Номер"]; ?>
-            <p><?php print $room["Количество мест"]; ?></p></button>
-    <?php } ?>
+        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
+            <p><?php print $room["Количество мест"]; ?></p> </a> 
+   <?php } ?>
 </form>
 <p style="color: blue"><big>Корпус В</big>
 </p>
 <form>
     <?php foreach ($roomsC as $room) { ?>
-        <button class="<?php
+    
+        <a href="#block" class="<?php
         $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
 
         if (!isset($key) || $key === false) {
@@ -65,7 +68,7 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         } else if ($booking[$key]["Статус"] == 2) {
             print "color3";
         }
-        ?>"><?php print $room["Номер"]; ?>
-            <p><?php print $room["Количество мест"]; ?></p></button>
-    <?php } ?>
+        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
+            <p><?php print $room["Количество мест"]; ?></p> </a> 
+   <?php } ?>
 </form>

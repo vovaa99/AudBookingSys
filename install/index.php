@@ -70,13 +70,19 @@ $date = $_SESSION['date'];
 
             <div id="booking">
             </div>
-
+            <div id="block" class="modalDialog">
+                <div id="modal">
+                    <p>Окно с действиями</p>
+                    <a href="#close" class="close">Закрыть окно</a>
+                </div>
+            </div>
             <?php
         }
     }
     ?>
 </div>
 <script>
+
     function produceData(lesson) {
         if (lesson == "") {
             document.getElementById("booking").innerHTML = "";
@@ -109,6 +115,16 @@ $date = $_SESSION['date'];
         evt.currentTarget.className += " active";
     }
     document.getElementById("defaultOpen").click();
+   /* function setcoord(evt) {
+        var x,y,line;
+        x = evt.pageX;
+        y = evt.pageY;
+     
+       
+        line = y+"px auto auto "+x+"px";
+      
+        document.getElementById("modal").style.margin = line;
+    }*/
 </script>
 <?php
 include 'footer.php';
