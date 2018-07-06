@@ -9,15 +9,14 @@ button{
 }
 body {
 
-    margin: 40px auto;
     font-family: 'trebuchet MS', 'Lucida sans', Arial;
     font-size: 15px;
     color: #444;
+    bgcolor: #f8f8ff;
 }
 .content
 {
     padding: 5px;
-
 }
 
 table {
@@ -172,28 +171,25 @@ button.color3 {
 
 /* Style the tab content */
 
-.tabcontent {
-    display: none;
+#booking {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-
-
 }
-.tabcontent>p
+#booking>p
 {
     margin:10px 0 0 5px; 
 
 }
-.tabcontent form {
+#booking form {
     display: inline-block;
 }
 
-.tabcontent form button {
+#booking form button {
     padding: 15px;
 }
 
-.tabcontent form button p {
+#booking form button p {
     color: black;
     font-size: 12pt;
     margin-top: 3px;

@@ -17,8 +17,9 @@ if (isset($_POST['submit'])) {
         if ( password_verify ($_POST['password'], $data['password']) ){
             // старое место расположения
             //  session_start();
-            $_SESSION['session_username'] = $_POST['email'].'_'.$_SERVER['HTTP_USER_AGENT'];
-            $_SESSION['type'] = $data['Type'];
+            $_SESSION['session_username'] = $_POST['email'];
+            $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+            //$_SESSION['type'] = $data['Type'];
             $_SESSION['name'] = $data['Name'];
             /* Перенаправление браузера */
             header("Location: index.php");
