@@ -2,7 +2,6 @@
 include 'lib/connection.php';
 include 'head.php';
 session_start();
-
 if (!isset($_SESSION['date'])) {
     $_SESSION['date'] = date("Y-m-d");
 }
@@ -82,7 +81,6 @@ $date = $_SESSION['date'];
     ?>
 </div>
 <script>
-
     function produceData(lesson) {
         if (lesson == "") {
             document.getElementById("booking").innerHTML = "";
@@ -104,7 +102,6 @@ $date = $_SESSION['date'];
             xmlhttp.send();
         }
     }
-
     function setLesson(evt, lesson) {
         produceData(lesson);
         var i, tablinks;

@@ -20,7 +20,7 @@ if (isset($_POST['submit_adm_signup'])) {
     if (!$_POST['tel']) {
         $err_signup[] = "Вы не ввели рабочий телефон";
     }
-    if (!$_POST['department']) {
+    if (!$_POST['faculty']) {
         $err_signup[] = "Вы не ввели Отдел";
     }
     if (!$_POST['rank']) {
@@ -32,10 +32,10 @@ if (isset($_POST['submit_adm_signup'])) {
         $name = $_POST['name'];
         $type = 2;
         $tel = $_POST['tel'];
-        $department = $_POST['department'];
+        $faculty = $_POST['faculty'];
         $rank = $_POST['rank'];
 
-        if(!mysqli_query($con, "INSERT INTO `acc_management` SET email='" . $email . "', password='" . $password . "', Name='" . $name . "', Type='" . $type . "', Tel='" . $tel . "', Department='" . $department . "', Rank='" . $rank . "'"))
+        if(!mysqli_query($con, "INSERT INTO `acc_management` SET email='" . $email . "', password='" . $password . "', Name='" . $name . "', Type='" . $type . "', Tel='" . $tel . "', Faculty='" . $faculty . "', Rank='" . $rank . "'"))
         {
             print "<b>Не удалось выполнить запрос.</b><br>";   
             printf("Errormessage: %s\n", mysqli_error($con));
@@ -67,7 +67,7 @@ if (isset($_POST['submit_adm_signup'])) {
             <label for="tel">Рабочий телефон*<input name="tel" type="text"></label>
         </p>
         <p>
-            <label for="department">Отдел* <input name="department" type="text"></label>
+            <label for="faculty">Отдел* <input name="faculty" type="text"></label>
         </p>
         <p>
             <label for="rank">Должность* <input name="rank" type="text"></label>
