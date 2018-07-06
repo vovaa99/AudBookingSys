@@ -3,7 +3,7 @@ $err=0;
     unlink('index.php');
     rename('install/index.php', 'index.php');
 
-    if (is_file('index.php') && filesize('index.php') != 661){   
+    if (is_file('index.php') && filesize('index.php') != 4989){   
         print "<b>Замените файл index.php файлом install/index.php, удалите папку install, удалите файл result.php, чтобы завершить установку. </b><br>";   
         $err++;
     } elseif (!is_file('index.php')) {    
