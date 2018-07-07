@@ -6,69 +6,63 @@ $d = $_GET['d'];
 <?php
 include 'lib/connection.php';
 
-$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Состояние`='1' AND `Корпус`='А'");
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='А'");
 $roomsA = mysqli_fetch_all($query, MYSQLI_ASSOC);
-$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Состояние`='1' AND `Корпус`='Б'");
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='Б'");
 $roomsB = mysqli_fetch_all($query, MYSQLI_ASSOC);
-$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Состояние`='1' AND `Корпус`='В'");
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='В'");
 $roomsC = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-$query = mysqli_query($con, "SELECT * FROM `booking` WHERE `Дата`='" . $d . "' AND `№ пары`='" . $q . "'");
+$query = mysqli_query($con, "SELECT * FROM `booking` WHERE `Date`='" . $d . "' AND `Lesson`='" . $q . "'");
 $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
 <p style="color: blue"><big>Корпус А</big></p>
 <form>
-    <?php foreach ($roomsA as $room) { ?>
-    
-        <a href="#block" class="<?php
-        $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
-
+    <?php
+    foreach ($roomsA as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false) {
-            print "color1";
-        } else if ($booking[$key]["Статус"] == 1) {
-            print "color2";
-        } else if ($booking[$key]["Статус"] == 2) {
-            print "color3";
+            print "<a href=\"#block1\" class=\"color1\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 1) {
+            print "<a href=\"#block2\" class=\"color2\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3\" onclick=\"setcoord(event)\">";
         }
-        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
-            <p><?php print $room["Количество мест"]; ?></p> </a> 
-   <?php } ?>
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?></p> </a> 
+<?php } ?>
 </form>
 <p style="color: blue"><big>Корпус Б</big>
 </p>
 <form>
-    <?php foreach ($roomsB as $room) { ?>
-    
-        <a href="#block" class="<?php
-        $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
-
+    <?php
+    foreach ($roomsB as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false) {
-            print "color1";
-        } else if ($booking[$key]["Статус"] == 1) {
-            print "color2";
-        } else if ($booking[$key]["Статус"] == 2) {
-            print "color3";
+            print "<a href=\"#block1\" class=\"color1\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 1) {
+            print "<a href=\"#block2\" class=\"color2\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3\" onclick=\"setcoord(event)\">";
         }
-        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
-            <p><?php print $room["Количество мест"]; ?></p> </a> 
-   <?php } ?>
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?></p> </a> 
+<?php } ?>
 </form>
 <p style="color: blue"><big>Корпус В</big>
 </p>
 <form>
-    <?php foreach ($roomsC as $room) { ?>
-    
-        <a href="#block" class="<?php
-        $key = array_search($room["Номер"], array_column($booking, '№ аудитории'));
-
+    <?php
+    foreach ($roomsC as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false) {
-            print "color1";
-        } else if ($booking[$key]["Статус"] == 1) {
-            print "color2";
-        } else if ($booking[$key]["Статус"] == 2) {
-            print "color3";
+            print "<a href=\"#block1\" class=\"color1\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 1) {
+            print "<a href=\"#block2\" class=\"color2\" onclick=\"setcoord(event)\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3\" onclick=\"setcoord(event)\">";
         }
-        ?>" onclick="setcoord(event)"><p><?php print $room["Номер"]; ?></p>
-            <p><?php print $room["Количество мест"]; ?></p> </a> 
-   <?php } ?>
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?></p> </a> 
+<?php } ?>
 </form>
