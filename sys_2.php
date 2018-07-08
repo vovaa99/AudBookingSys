@@ -26,14 +26,14 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
     foreach ($roomsA as $room) {
         $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0) {
-            print "<a href=\"#block1\" class=\"color1\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 1) {
-            print "<a href=\"#block2\" class=\"color2\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block2\" class=\"color2\" title=\"Просмотреть заявки\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3\">";
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Отклонить заявку\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\" onclick=\"generate_reject('" . $booking[$key]["#"] . "', '" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
-        <p><?php print $room["Capacity"]; ?></p> </a> 
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
 <?php } ?>
 </form>
 <p style="color: blue"><big>Корпус Б</big>
@@ -43,14 +43,14 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
     foreach ($roomsB as $room) {
         $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0) {
-            print "<a href=\"#block1\" class=\"color1\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 1) {
-            print "<a href=\"#block2\" class=\"color2\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block2\" class=\"color2\" title=\"Просмотреть заявки\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3\">";
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Отклонить заявку\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\" onclick=\"generate_reject('" . $booking[$key]["#"] . "', '" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
-        <p><?php print $room["Capacity"]; ?></p> </a> 
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
 <?php } ?>
 </form>
 <p style="color: blue"><big>Корпус В</big>
@@ -60,13 +60,13 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
     foreach ($roomsC as $room) {
         $key = array_search($room["Room"], array_column($booking, 'Room'));
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0) {
-            print "<a href=\"#block1\" class=\"color1\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 1) {
-            print "<a href=\"#block2\" class=\"color2\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+            print "<a href=\"#block2\" class=\"color2\" title=\"Просмотреть заявки\" onclick=\"request_table('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3\">";
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Отклонить заявку\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\" onclick=\"generate_reject('" . $booking[$key]["#"] . "', '" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
-        <p><?php print $room["Capacity"]; ?></p> </a> 
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
 <?php } ?>
 </form>

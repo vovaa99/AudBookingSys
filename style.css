@@ -18,7 +18,18 @@ body {
 {
     padding: 5px;
 }
+#left_head{
 
+    display:inline-block;
+}
+.menu{
+    display:inline-block;
+    float:right;
+    margin: 5px 20px auto auto;
+}
+#info{
+    height:26px;    
+}
 table {
     *border-collapse: collapse; /* IE7 и раньше */
     border-spacing: 0;
@@ -150,6 +161,7 @@ a.color3 {
     border: 1px solid #ccc;
     background-color: #dce9f9;
     height: 50px;
+    width: 100%;
 }
 
 /* Style the buttons inside the tab */
@@ -296,6 +308,12 @@ a.color3 {
 }
 .close:hover {background: #e6e6ff;}
 #block1>.modal{
+    width:400px;
+}
+#block2>.modal{
+    width:1000px;
+}
+#block3>.modal{
     width:400px;
 }
 .modal>p{

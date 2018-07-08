@@ -30,7 +30,7 @@ print "<p>Заявки на аудиторию " . $room . ", " . $date . ", " .
                     . "<td class=\"askname_tbl\">" . $booking['AskerName'] . "</td>" . PHP_EOL
                     . "<td class=\"prepname_tbl\">" . $booking['PrepName'] . "</td>" . PHP_EOL
                     . "<td class=\"aim_tbl\">" . $booking['Aim'] . "</td>" . PHP_EOL
-                    . "<td><button class=\"divert_tbl\" type=\"submit\" onclick=\"request_button(this, 0);\">Отклонить</button>"
+                    . "<td><button class=\"reject_tbl\" type=\"submit\" onclick=\"request_button(this, 0);\">Отклонить</button>"
                     . "<button class=\"approve_tbl\" type=\"submit\" onclick=\"request_button(this, 2);\">Подтвердить</button></td>";
             ?>
         </tr>

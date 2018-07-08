@@ -1,157 +1,63 @@
 <?php
 $q = intval($_GET['q']);
+$d = $_GET['d'];
+
 include 'lib/connection.php';
 
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='А'");
+$roomsA = mysqli_fetch_all($query, MYSQLI_ASSOC);
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='Б'");
+$roomsB = mysqli_fetch_all($query, MYSQLI_ASSOC);
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='В'");
+$roomsC = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+/* $query = mysqli_query($con, "SELECT * FROM `booking` WHERE `Date`='" . $d . "' AND `Lesson`='" . $q . "'");
+  $booking = mysqli_fetch_all($query, MYSQLI_ASSOC); */
+$query = mysqli_query($con, "SELECT * FROM (SELECT * FROM `booking` WHERE `Date`='" . $d . "' AND `Lesson`='" . $q . "' GROUP BY CONCAT(`Room`, '-',`Status`) ORDER BY `Status` DESC) AS T GROUP BY `Room`");
+$booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
 
-<div id="1" class="tabcontent">
-    <p style="color: blue"><big>Корпус А</big>
+<p style="color: blue"><big>Корпус А</big></p>
+<form>
+    <?php
+    foreach ($roomsA as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+        }
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
+<?php } ?>
+</form>
+<p style="color: blue"><big>Корпус Б</big>
 </p>
 <form>
-    <button class="color1">17-A
-        <p> somth </p></button>
-    <button class="color1">107-A
-        <p> somth </p></button>
-    <button class="color2">209-A
-        <p> somth </p></button>
-    <button class="color1">304-A
-        <p> somth </p></button>
-    <button class="color1">309-A
-        <p> somth </p></button>
-    <button class="color1">315-A
-        <p> somth </p></button>
-    <button class="color2">323-A
-        <p> somth </p></button>
-    <button class="color3">332-A
-        <p> somth </p></button>
-    <button class="color1">334-A
-        <p> somth </p></button>
-    <button class="color1">335-A
-        <p> somth </p></button>
-    <button class="color1">401-A
-        <p> somth </p></button>
-    <button class="color1">402-A
-        <p> somth </p></button>
-    <button class="color1">404-A
-        <p> somth </p></button>
-    <button class="color2">423-A
-        <p> somth </p></button>
-    <button class="color1">504-A
-        <p> somth </p></button>
-    <button class="color2">508-A
-        <p> somth </p></button>
-    <button class="color1">601-A
-        <p> somth </p></button>
-    <button class="color1">602-A
-        <p> somth </p></button>
-    <button class="color1">603-A
-        <p> somth </p></button>
-    <button class="color1">604-A
-        <p> somth </p></button>
-    <button class="color1">607-A
-        <p> somth </p></button>
-    <button class="color1">701-A
-        <p> somth </p></button>
-    <button class="color3">702-A
-        <p> somth </p></button>
-    <button class="color1">708-A
-        <p> somth </p></button>
-    <button class="color3">806-A
-        <p> somth </p></button>
-    <button class="color1">808-A
-        <p> somth </p></button>
-    <button class="color2">901-A
-        <p> somth </p></button>
-    <button class="color1">902-A
-        <p> somth </p></button>
-    <button class="color1">908-A
-        <p> somth </p></button>
-    <button class="color1">1001-A
-        <p> somth </p></button>
-    <button class="color1">1002-A
-        <p> somth </p></button>
-    <button class="color1">1005-A
-        <p> somth </p></button>
-    <button class="color3">1006-A
-        <p> somth </p></button>
-    <button class="color1">2401-A
-        <p> somth </p></button>
+    <?php
+    foreach ($roomsB as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+        }
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
+<?php } ?>
 </form>
-<p style="color: blue"><big><big>Корпус Б</big></big>
+<p style="color: blue"><big>Корпус В</big>
 </p>
 <form>
-    <button class="color2">101-Б
-        <p> somth </p></button>
-    <button class="color1">105-Б
-        <p> somth </p></button>
-    <button class="color1">201-Б
-        <p> somth </p></button>
-    <button class="color2">203-Б
-        <p> somth </p></button>
-    <button class="color3">207-Б
-        <p> somth </p></button>
-    <button class="color1">209-Б
-        <p> somth </p></button>
-    <button class="color1">228-Б
-        <p> somth </p></button>
-    <button class="color1">303-Б
-        <p> somth </p></button>
-    <button class="color1">311-Б
-        <p> somth </p></button>
-    <button class="color3">315-Б
-        <p> somth </p></button>
-    <button class="color1">319-Б
-        <p> somth </p></button>
-    <button class="color3">321-Б
-        <p> somth </p></button>
-    <button class="color1">323-Б
-        <p> somth </p></button>
-    <button class="color1">513-Б
-        <p> somth </p></button>
-    <button class="color1">515-Б
-        <p> somth </p></button>
-    <button class="color3">517-Б
-        <p> somth </p></button>
-    <button class="color1">518-Б
-        <p> somth </p></button>
-    <button class="color1">1000-Б
-        <p> somth </p></button>
-    </p>
+    <?php
+    foreach ($roomsC as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+        }
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
+<?php } ?>
 </form>
-<p style="color: blue"><big><big>Корпус В</big></big>
-</p>
-<form>
-    <button class="color1">1-В
-        <p> somth </p></button>
-    <button class="color2">205-В
-        <p> somth </p></button>
-    <button class="color1">301-В
-        <p> somth </p></button>
-    <button class="color1">302-В
-        <p> somth </p></button>
-    <button class="color1">305-В
-        <p> somth </p></button>
-    <button class="color3">306-B
-        <p> somth </p></button>
-    <button class="color3">309-В
-        <p> somth </p></button>
-    <button class="color1">310-В
-        <p> somth </p></button>
-    <button class="color3">311-В
-        <p> somth </p></button>
-    <button class="color1">401-В
-        <p> somth </p></button>
-    <button class="color3">405-В
-        <p> somth </p></button>
-    <button class="color1">406-В
-        <p> somth </p></button>
-    <button class="color2">408-В
-        <p> somth </p></button>
-    <button class="color2">409-В
-        <p> somth </p></button>
-    <button class="color1">411-В
-        <p> somth </p></button>
-    <button class="color1">412-В
-        <p> somth </p></button>
-</form>
-</div>

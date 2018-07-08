@@ -4,6 +4,11 @@ $room = $_POST['room'];
 //echo $room ."<br>";
 $date = $_POST['date'];
 //echo $date."<br>";
+if(date("Y-m-d") > $date){
+    $result =  "<p>Нельзя бронировать аудитории на прошедшую дату.</p>";
+    echo $result;
+    exit();
+}
 $lesson = $_POST['lesson'];
 //echo $lesson."<br>";
 $email = $_POST['email'];

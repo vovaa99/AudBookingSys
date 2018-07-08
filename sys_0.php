@@ -1,76 +1,63 @@
 <?php
-include 'head.php';
-session_start();
+$q = intval($_GET['q']);
+$d = $_GET['d'];
+
 include 'lib/connection.php';
 
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='А'");
+$roomsA = mysqli_fetch_all($query, MYSQLI_ASSOC);
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='Б'");
+$roomsB = mysqli_fetch_all($query, MYSQLI_ASSOC);
+$query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='В'");
+$roomsC = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-$date = $_SESSION['date'];
+/* $query = mysqli_query($con, "SELECT * FROM `booking` WHERE `Date`='" . $d . "' AND `Lesson`='" . $q . "'");
+  $booking = mysqli_fetch_all($query, MYSQLI_ASSOC); */
+$query = mysqli_query($con, "SELECT * FROM (SELECT * FROM `booking` WHERE `Date`='" . $d . "' AND `Lesson`='" . $q . "' GROUP BY CONCAT(`Room`, '-',`Status`) ORDER BY `Status` DESC) AS T GROUP BY `Room`");
+$booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
-<script>
-    function audrequest() {
-        /*var formData = {
-         'room': $('input[audrequest=room]').val(),
-         'date': $('input[audrequest=date]').val(),
-         'lesson': $('input[audrequest=lesson]').val(),
-         'email': $('input[audrequest=email]').val(),
-         'faculty': $('input[audrequest=faculty]').val(),
-         'prepname': $('input[audrequest=prepname]').val(),
-         'aim': $('input[audrequest=aim]').val()
-         };*/
-        /*var room = document.getElementById("room").value; 
-         var date = document.getElementById("date").value; 
-         var lesson = document.getElementById("lesson").value; 
-         var email = document.getElementById("email").value; 
-         var prepname = document.getElementById("prepname").value; 
-         var aim = document.getElementById("aim").value; */
 
-        formData = {
-            'room': document.getElementById("room").value,
-            'date': document.getElementById("date").value,
-            'lesson': document.getElementById("lesson").value,
-            'email': document.getElementById("email").value,
-            'faculty':document.getElementById("faculty").value,
-            'prepname': document.getElementById("prepname").value,
-            'aim': document.getElementById("aim").value
+<p style="color: blue"><big>Корпус А</big></p>
+<form>
+    <?php
+    foreach ($roomsA as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a class=\"color1\" title=\"Аудитория свободна\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
         }
-        alert(formData['room']);
-        $.ajax({
-            type: "POST",
-            url: "newAudRequest.php",
-            data: formData,
-            cache: false,
-            success: function (html) {
-                $('#error').html(html);
-            }
-        });
-        return false;
-    }
-</script>
-<div id="error"></div>
-<p>Заявка на аудиторию room, date, lesson пара</p> 
-
-<p>
-    <label for="prepname">ФИО преподавателя
-        <input class="input" id="prepname" name="prepname" type="text" value="">
-    </label>
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p></a> 
+<?php } ?>
+</form>
+<p style="color: blue"><big>Корпус Б</big>
 </p>
-<p>
-    <label for="aim">Цель
-        <input class="input" id="aim" name="aim"  type="text" value="Проведение занятия">
-    </label>
-</p> 
-<p>
-    <label for="faculty">Факультет
-        <input class="input" id="faculty" name="faculty"  type="text" value="Факультет">
-    </label>
-</p> 
-<input class="input" id="lesson" name="lesson" type="text" value="lesson">
-<input class="input" id="date" name="date" type="date" value="2018-07-08">  
-<input class="input" id="room" name="room" type="text" value="room">  
-<input class="input" id="email" name="email" type="text" value="<?php print $_SESSION['session_username']; ?>">  
-<p class="submit"><input class="button" name="submit_zayavka" type="submit" value="Оставить заявку" onclick="return audrequest();"></p>
-
-
-
-<?php
-include 'footer.php';
+<form>
+    <?php
+    foreach ($roomsB as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a class=\"color1\" title=\"Аудитория свободна\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+        }
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
+<?php } ?>
+</form>
+<p style="color: blue"><big>Корпус В</big>
+</p>
+<form>
+    <?php
+    foreach ($roomsC as $room) {
+        $key = array_search($room["Room"], array_column($booking, 'Room'));
+        if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
+            print "<a class=\"color1\" title=\"Аудитория свободна\">";
+        } else if ($booking[$key]["Status"] == 2) {
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+        }
+        ?><p><?php print $room["Room"]; ?></p>
+        <p><?php print $room["Capacity"]; ?> мест</p> </a> 
+<?php } ?>
+</form>
