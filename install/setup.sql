@@ -20,7 +20,7 @@ USE `DB_NAME` ;
 -- Table `DB_NAME`.`acc_management`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DB_NAME`.`acc_management` (
-  `#` INT(10) UNSIGNED NOT NULL,
+  `#` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Type` TINYINT(1) UNSIGNED NOT NULL,
   `Email` VARCHAR(255) NOT NULL,
   `Password` LONGTEXT NOT NULL,
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `DB_NAME`.`acc_management` (
   `Rank` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`#`))
 ENGINE = INNODB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 

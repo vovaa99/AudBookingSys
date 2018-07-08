@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     }
     # проверяем, не сущестует ли пользователя с таким именем
 
-    $query = mysqli_query($con, "SELECT COUNT(`#`) FROM `acc_management` WHERE email='" . mysqli_real_escape_string($con, $_POST['email']) . "'");
+    $query = mysqli_query($con, "SELECT COUNT(`#`) FROM `acc_management` WHERE `Email`='" . mysqli_real_escape_string($con, $_POST['email']) . "'");
     mysqli_field_seek($query, 0);
     $finfo = mysqli_fetch_assoc($query);
     if ($finfo["COUNT(`#`)"] > 0) {
@@ -38,10 +38,10 @@ if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $type = $_POST['type'];
         $tel = $_POST['tel'];
-        $department = $_POST['department'];
+        $faculty = $_POST['faculty'];
         $rank = $_POST['rank'];
 
-        mysqli_query($con, "INSERT INTO `acc_management` SET email='" . $email . "', password='" . $password . "', Name='" . $name . "', Type='" . $type . "', Tel='" . $tel . "', Department='" . $department . "', Rank='" . $rank . "'");
+        mysqli_query($con, "INSERT INTO `acc_management` SET `Email`='" . $email . "', `Password`='" . $password . "', `Name`='" . $name . "', `Type`='" . $type . "', `Tel`='" . $tel . "', `Faculty`='" . $faculty . "', `Rank`='" . $rank . "'");
 
         header("Location: auth.php");
         exit();
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
     <input type="radio" name="type" value="2" />Администратор <br>
 
     Рабочий телефон <input name="tel" type="text"><br>
-    Отдел <input name="department" type="text"><br>
+    Отдел <input name="faculty" type="text"><br>
     Должность <input name="rank" type="text"><br>
 
 

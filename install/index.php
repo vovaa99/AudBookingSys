@@ -42,9 +42,8 @@ $date = $_SESSION['date'];
                 ?>г.</h1>
             <?php
             $type = 0;
-
-            if (!isset($_SESSION['session_username'])) {
-                $email = "";
+            $email = "";
+            if (!isset($_SESSION['session_username'])) {                
                 ?>
             </div>
             <div class="menu">
@@ -250,7 +249,7 @@ if ($type != 0) {
                     document.location = "index.php#close";
                     var el = document.getElementsByClassName("tablinks active");
                     produceData(el[0].innerHTML.substr(0, 1));
-                    $("#info").html("<h1 style=\"color:blue\" Запрос отправлен успешно.</h1>");
+                    $("#info").html("<h2 style=\"color:red\">Запрос отправлен успешно.</h2>");
 
                 } else
                 {
