@@ -149,6 +149,7 @@ a.color3 {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #dce9f9;
+    height: 50px;
 }
 
 /* Style the buttons inside the tab */
@@ -159,7 +160,9 @@ a.color3 {
     border: none;
     outline: none;
     cursor: pointer;
+    margin: 0;
     padding: 14px 16px;
+    height: 50px;
     transition: 0.3s;
     font-size: 17px;
 }
@@ -216,7 +219,6 @@ a.color3 {
 .table-wrapper {
     margin:0 auto;
     max-width: 1000px;
-
 }
 .form-wrapper {
     margin:10px auto;
@@ -296,6 +298,6 @@ a.color3 {
 #block1>.modal{
     width:400px;
 }
-.modal>form>p{
+.modal>p{
     margin-top: 10px;
 }

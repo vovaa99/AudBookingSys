@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include 'head.php';
 session_start();
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
             //echo $_POST['email'], ' ' , $_POST['password'],' ', $data['password'], ' ', $data['Name'];
         }
     } else {
-        $message = "Необходимо заполнить все поля!";
+         print "<p>Необходимо заполнить все поля</p>";
     }
 }
 ?>

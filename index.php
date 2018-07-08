@@ -1,7 +1,7 @@
 <?php
 include 'lib/connection.php';
-include 'head.php';
 session_start();
+include 'head.php';
 if (!isset($_SESSION['date'])) {
     $_SESSION['date'] = date("Y-m-d");
 }
@@ -87,21 +87,6 @@ $date = $_SESSION['date'];
             </div>
             <div id="block1" class="modalDialog">
                 <div class="modal">
-                    <p>Заявка на аудиторию</p> 
-                    <form action="index.php" id="audrequest" method="post" name="audrequest">
-                        <p>
-                            <label for="prepName">ФИО преподавателя
-                                <input class="input" id="prepName" name="prepName" type="text" value="">
-                            </label>
-                        </p>
-                        <p>
-                            <label for="aim">Цель
-                                <input class="input" id="aim" name="aim"  type="aim" value="">
-                            </label>
-                        </p> 
-                        <p class="submit"><input class="button" name="submit" type="submit" value="Оставить заявку" onclick="audrequest()"></p>
-                    </form>
-                    <a href="#close" class="close">Закрыть окно</a>
                 </div>
             </div>
             <div id="block2" class="modalDialog">
@@ -153,16 +138,114 @@ $date = $_SESSION['date'];
         evt.currentTarget.className += " active";
     }
     document.getElementById("defaultOpen").click();
-    /* function setcoord(evt) {
-     var x,y,line;
-     x = evt.pageX;
-     y = evt.pageY;
-     
-     
-     line = y+"px auto auto "+x+"px";
-     
-     document.getElementById("modal").style.margin = line;
-     }*/
+    function generateform(lesson, date, room) {
+        var targetDiv = document.getElementById("block1").getElementsByClassName("modal")[0];
+        targetDiv.innerHTML = `
+        <div id="error"></div>
+        <p>Заявка на аудиторию ${room}, ${date}, ${lesson} пара</p> 
+        <p>
+            <label for="prepname">ФИО преподавателя
+                <input class="input" id="prepname_ar" name="prepname" type="text" value="">
+            </label>
+        </p>
+        <p>
+            <label for="aim">Цель
+                <input class="input" id="aim_ar" name="aim"  type="text" value="Проведение занятия">
+            </label>
+        </p> 
+        <p>
+            <label for="faculty">Факультет
+                <input class="input" id="faculty_ar" name="faculty"  type="text" value="Факультет">
+            </label>
+        </p> 
+        <input style="display:none" class="input" id="lesson_ar" name="lesson" type="text" value="${lesson}">
+        <input style="display:none" class="input" id="date_ar" name="date" type="date" value="${date}"> 
+        <input style="display:none" class="input" id="room_ar" name="room" type="text" value="${room}">  
+        <input style="display:none" class="input" id="email_ar" name="email" type="text" value="<?php print $_SESSION['session_username']; ?>">  
+        <p class="submit"><input class="button" name="submit_zayavka" type="submit" value="Оставить заявку" onclick="return audrequest();"></p>
+        <a href="#close" class="close">Закрыть окно</a>`;
+    }
+
+    function audrequest() {
+        formData = {
+            'room': document.getElementById("room_ar").value,
+            'date': document.getElementById("date_ar").value,
+            'lesson': document.getElementById("lesson_ar").value,
+            'email': document.getElementById("email_ar").value,
+            'faculty': document.getElementById("faculty_ar").value,
+            'prepname': document.getElementById("prepname_ar").value,
+            'aim': document.getElementById("aim_ar").value
+        }
+        $.ajax({
+            type: "POST",
+            url: "newAudRequest.php",
+            data: formData,
+            cache: false,
+            success: function (response) {
+                if (response == "1") {
+                    document.location = "index.php#close";
+                    var el = document.getElementsByClassName("tablinks active");
+                    produceData(el[0].innerHTML.substr(0, 1));
+                } else
+                {
+                    $('#error').html(response);
+                }
+            }
+        });
+        return false;
+    }
+    function request_table(lesson, date, room) {
+        formData = {
+            'room': room,
+            'date': date,
+            'lesson': lesson,
+        }
+        $.ajax({
+            type: "POST",
+            url: "get_short_table.php",
+            data: formData,
+            cache: false,
+            success: function (response) {
+                if (response == "error") {
+                    document.location = "index.php#close";
+                    var el = document.getElementsByClassName("tablinks active");
+                    produceData(el[0].innerHTML.substr(0, 1));
+                } else
+                {
+                    //document.getElementById("block2").getElementsByClassName("modal")[0].innerHTML=response;
+                    $('#block2 .modal').html(response);
+                }
+            }
+        });
+    }
+    function request_button(element, status) {
+        var id = element.closest("tr").id;
+        req = {
+            'id': id,
+            'status': status
+        }
+        $.ajax({
+            type: "POST",
+            url: "process_short_table.php",
+            data: req,
+            cache: false,
+            success: function (response) {
+                /*if (html != "error")
+                 {
+                 $('#error').html(response);
+                 
+                 } else {
+                 document.location = "index.php#close";
+                 var el = document.getElementsByClassName("tablinks active");
+                 produceData(el[0].innerHTML.substr(0, 1));
+                 }*/
+                document.location = "index.php#close";
+                var el = document.getElementsByClassName("tablinks active");
+                produceData(el[0].innerHTML.substr(0, 1));
+            }
+        });
+        return false;
+    }
 </script>
 <?php
 include 'footer.php';
