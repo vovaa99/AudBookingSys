@@ -7,7 +7,8 @@ include 'lib/connection.php';
 $query = mysqli_query($con, "SELECT * FROM `booking`  WHERE `Date`='" . $date . "' AND `Lesson`='" . $lesson . "' AND `Room`='" . $room . "'  AND `Status` != '0'");
 $bookings = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-print "<p>Заявки на аудиторию " . $room . ", " . $date . ", " . $lesson . " пара</p>"
+print "<p>Заявки на аудиторию " . $room . ", " . $date . ", " . $lesson . " пара</p>";
+print "<a href=\"#block1\" class=\"operations\" title=\"Новая заявка\" onclick=\"generateform('" . $lesson . "','" . $date . "','" . $room . "')\">Новая заявка</a>";
 ?>
 <div id="error"></div>
 <table class="bordered" id="req_table">

@@ -42,7 +42,9 @@ $date = $_SESSION['date'];
                 ?>г.</h1>
             <?php
             $type = 0;
+
             if (!isset($_SESSION['session_username'])) {
+                $email = "";
                 ?>
             </div>
             <div class="menu">
@@ -81,6 +83,7 @@ $date = $_SESSION['date'];
             echo $_SESSION['name'];
             ?>
             <p>Пользователь деканат</p>
+            <p class="regtext"><a href= "my_req.php">Мои заявки</a></p>
             <p class="regtext"><a href= "accManager.php">Изменить аккаунт</a></p>
             <a href="logout.php">Выход</a>
         </div>
@@ -170,7 +173,7 @@ $date = $_SESSION['date'];
                 }
             };
             if (<?php print $type; ?> == 1) {
-                xmlhttp.open("GET", "sys_1.php?q=" + lesson + "&d=" + "<?php print $date; ?>", true);
+                xmlhttp.open("GET", "sys_1.php?q=" + lesson + "&d=" + "<?php print $date; ?>" + "&email=" + "<?php print $email; ?>", true);
             } else if (<?php print $type; ?> == 2) {
                 xmlhttp.open("GET", "sys_2.php?q=" + lesson + "&d=" + "<?php print $date; ?>", true);
             } else {
@@ -191,6 +194,7 @@ $date = $_SESSION['date'];
     document.getElementById("defaultOpen").click();
 </script>
 <script>
+
     function generateform(lesson, date, room) {
         var targetDiv = document.getElementById("block1").getElementsByClassName("modal")[0];
         targetDiv.innerHTML = `
@@ -224,7 +228,8 @@ if ($type != 0) {
     <p class="submit"><input class="button" name="submit_zayavka" type="submit" value="Оставить заявку" onclick="return audrequest();"></p>
     <a href="#close" class="close">Закрыть окно</a>`;
     }
-
+</script>
+<script>
     function audrequest() {
         formData = {
             'room': document.getElementById("room_ar").value,
@@ -245,6 +250,8 @@ if ($type != 0) {
                     document.location = "index.php#close";
                     var el = document.getElementsByClassName("tablinks active");
                     produceData(el[0].innerHTML.substr(0, 1));
+                    $("#info").html("<h1 style=\"color:blue\" Запрос отправлен успешно.</h1>");
+
                 } else
                 {
                     $('#error').html(response);

@@ -1,7 +1,7 @@
 <?php
 $q = intval($_GET['q']);
 $d = $_GET['d'];
-
+$email = $_GET['email'];
 include 'lib/connection.php';
 
 $query = mysqli_query($con, "SELECT * FROM `rooms`  WHERE `Status`='1' AND `Building`='А'");
@@ -25,7 +25,7 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
             print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
         <p><?php print $room["Capacity"]; ?> мест</p> </a> 
@@ -40,7 +40,7 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
             print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
         <p><?php print $room["Capacity"]; ?> мест</p> </a> 
@@ -55,7 +55,7 @@ $booking = mysqli_fetch_all($query, MYSQLI_ASSOC);
         if (!isset($key) || $key === false || $booking[$key]["Status"] == 0 || $booking[$key]["Status"] == 1) {
             print "<a href=\"#block1\" class=\"color1\" title=\"Новая заявка\" onclick=\"generateform('" . $q . "','" . $d . "','" . $room["Room"] . "')\">";
         } else if ($booking[$key]["Status"] == 2) {
-            print "<a href=\"#block3\" class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
+            print "<a class=\"color3 " . $booking[$key]["#"] . "\" title=\"Аудитория занята\" onmouseover=\"get_booking_info(this)\" onmouseout=\"clear_info()\">";
         }
         ?><p><?php print $room["Room"]; ?></p>
         <p><?php print $room["Capacity"]; ?> мест</p> </a> 
