@@ -1,5 +1,8 @@
 <?php
 $err=0;
+session_start();
+session_destroy();
+
     unlink('index.php');
     rename('install/index.php', 'index.php');
 
