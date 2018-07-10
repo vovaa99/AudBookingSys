@@ -13,7 +13,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema  DB_NAME
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `DB_NAME` DEFAULT CHARACTER SET utf8 ;
+-- CREATE SCHEMA IF NOT EXISTS `DB_NAME` DEFAULT CHARACTER SET utf8 ;
 USE `DB_NAME` ;
 
 -- -----------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `DB_NAME`.`rooms` (
 ENGINE = INNODB
 DEFAULT CHARACTER SET = utf8;
 
- INSERT INTO `DB_NAME`.`rooms` (`Room`, `Building`, `Capacity` ,`Status`) VALUES
+INSERT INTO `DB_NAME`.`rooms` (`Room`, `Building`, `Capacity` ,`Status`) VALUES
 ('17-А', 'А', '100', '1'),
 ('107-А', 'А', '100', '1'),
 ('209-А', 'А', '100', '1'),

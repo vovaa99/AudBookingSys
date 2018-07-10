@@ -1,5 +1,4 @@
 <?php  
-
 /* Константы */
     define("DB_SERVER", "localhost");
     define("DB_USER", "root");

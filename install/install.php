@@ -1,8 +1,6 @@
 <?php
-include '../head.php';
 $err = 0;
 $err_line = array();
-
 if (isset($_POST['submit_DB_set'])) {
 
     $file = fopen('../lib/constants.php', 'w+');
@@ -38,58 +36,10 @@ if (isset($_POST['submit_DB_set'])) {
         if (mysqli_connect_errno()) {
             $err++;
             $err_line[] = mysqli_connect_error();
-            //$err_array[] = mysqli_connect_error();
-            //print_r( mysqli_error_list($con));
         } else {
             mysqli_set_charset($con, 'utf8');
         }
-    }/*
-      if ($err == 0) {
-      $query = mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `" . $_POST['DB_NAME'] . "` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci");
-      if (!$query) {
-      $err_line[] = mysqli_error($con);
-      //$err_array[] = mysqli_error_list($con);
-      //print_r( mysqli_error_list($con));
-      }
-      }
-      if ($err == 0) {
-      $query = mysqli_query($con, "CREATE TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` (
-      `#` int(10) UNSIGNED NOT NULL,
-      `Type` tinyint(1) UNSIGNED DEFAULT NULL,
-      `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-      `password` longtext COLLATE utf8mb4_unicode_ci,
-      `Name` longtext COLLATE utf8mb4_unicode_ci,
-      `Tel` longtext COLLATE utf8mb4_unicode_ci,
-      `Department` longtext COLLATE utf8mb4_unicode_ci,
-      `Rank` longtext COLLATE utf8mb4_unicode_ci
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-      if (!$query) {
-      $err++;
-      $err_line[] = mysqli_error($con);
-      //$err_array[] = mysqli_error_list($con);
-      //print_r( mysqli_error_list($con));
-      }
-      }
-      if ($err == 0) {
-      $query = mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` ADD PRIMARY KEY (`#`)");
-      if (!$query) {
-      $err++;
-      $err_line[] = mysqli_error($con);
-      //$err_array[] = mysqli_error_list($con);
-      //print_r( mysqli_error_list($con));
-      }
-      }
-      if ($err == 0) {
-      $query = mysqli_query($con, "ALTER TABLE `" . $_POST['DB_NAME'] . "`.`acc_management` MODIFY `#` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1 ");
-
-      if (!$query) {
-      $err++;
-      $err_line[] = mysqli_error($con);
-      }
-      //$err_array[] = mysqli_error_list($con);
-      //print_r( mysqli_error_list($con));
-      } */
-
+    }
     include '../lib/constants.php';
     if ($err == 0) {
         $templine = '';
@@ -100,11 +50,9 @@ if (isset($_POST['submit_DB_set'])) {
 // Skip it if it's a comment
             if (substr($line, 0, 2) == '--' || $line == '')
                 continue;
-            $err_line[] = $line;
-            //$rep = "DB_NAME123";
-            //str_replace("`DB_NAME`", "`" . $_POST['DB_NAME'] . "`", $line);
-            $line = str_replace("DB_NAME", "" . DB_NAME . "", $line);
-            $err_line[] = $line;
+            $err_line[] = $line . "<br>";
+            $line = str_replace('DB_NAME', '' . DB_NAME . '', $line);
+            $err_line[] = $line . "<br>";
 // Add this line to the current segment
             $templine .= $line;
 // If it has a semicolon at the end, it's the end of the query
@@ -112,14 +60,17 @@ if (isset($_POST['submit_DB_set'])) {
                 // Perform the query
                 if (!mysqli_query($con, $templine)) {
                     $err++;
-                    $err_line[] = mysqli_error($con);
+                    $err_line[] = "!ERROR!" . mysqli_error($con) . "<br>";
                 }
                 // Reset temp variable to empty
                 $templine = '';
             }
         }
     }
-
+ /*   if (headers_sent()) {
+        $err++;
+        $err_line[] = "Redirect failed. Please click on this link.<br>";
+    }*/
     if ($err > 0) {
         print "<b>Произошли следующие ошибки:</b><br>";
         foreach ($err_line as $error) {
@@ -132,17 +83,21 @@ if (isset($_POST['submit_DB_set'])) {
             fwrite($err_file, $err . PHP_EOL);
         }
         fclose($err_file);
-    } else {
+    } else {       
         $line = 'define("DB_INSTALLED", 1); ' . PHP_EOL;
         file_put_contents('../lib/constants.php', $line, FILE_APPEND);
-        $err_file = fopen('../errors.txt', 'w+');
-        foreach ($err_line as $err) {
-            fwrite($err_file, $err . PHP_EOL);
-        }
-        fclose($err_file);
-        header("Location: first_signup.php");
+        /*      $err_file = fopen('../errors.txt', 'w+');
+          foreach ($err_line as $err) {
+          fwrite($err_file, $err . PHP_EOL);
+          }
+          fclose($err_file); */
+        header('HTTP/1.0 302 Found');
+        //header('Location: http://localhost/MyBooks.php');
+        header('Location: first_signup.php');
+        die();
     }
 }
+include '../head.php';
 ?>
 <div id="DB_set" >
     <form action="" method="post" name="DB_set">

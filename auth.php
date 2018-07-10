@@ -1,6 +1,4 @@
 <?php
-
-include 'head.php';
 session_start();
 require 'lib/connection.php';
 
@@ -32,6 +30,7 @@ if (isset($_POST['submit'])) {
          print "<p>Необходимо заполнить все поля</p>";
     }
 }
+include 'head.php';
 ?>
 <div id="login">
     <h1>Вход</h1>

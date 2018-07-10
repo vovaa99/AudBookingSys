@@ -1,6 +1,5 @@
 <?php
 include '../lib/connection.php';
-include '../head.php';
 
 if (isset($_POST['submit_adm_signup'])) {
     $err_signup = array();
@@ -51,6 +50,7 @@ if (isset($_POST['submit_adm_signup'])) {
         }
     }
 }
+include '../head.php';
 ?>
 <div id="adm_signup">
     <form method="POST" name="adm_signup">
