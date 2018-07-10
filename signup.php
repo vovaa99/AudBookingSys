@@ -1,5 +1,4 @@
 <?php
-include 'head.php';
 session_start();
 require 'lib/connection.php';
 
@@ -52,6 +51,7 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+include 'head.php';
 ?>
 <form method="POST">
 
